@@ -29,6 +29,11 @@ app.get('/', (req,res) => {
     });
 });
 
+//return all data in the candidates tables
+db.query(`SELECT * FROM candidates`, (err, rows) => {
+    console.log(rows);
+});
+
 //route to handle user requests that aren't supported by the app - should be last GET route
 app.use((req,res) => {
     res.status(404).end();
