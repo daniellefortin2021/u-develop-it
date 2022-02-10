@@ -33,7 +33,11 @@ app.get('/', (req,res) => {
 //return all data in the candidates tables (wrapped in an express route)
 //api/candidates endpoint
 app.get('/api/candidates', (req,res) => {
-    const sql = `SELECT * FROM candidates`;
+    const sql = `SELECT candidates.*, parties.name
+                AS party_name
+                FROM candidates
+                LEFT JOIN parties
+                ON candidates.party_id = parties.id`;
 
     db.query(sql, (err, rows) => {
         if (err) {
@@ -52,7 +56,12 @@ app.get('/api/candidates', (req,res) => {
 //return a single candidate from the candidates table in an express route
 // getting by value of id only
 app.get('/api/candidates/:id', (req, res) => {
-    const sql = `SELECT * FROM candidates WHERE id = ?`;
+    const sql = `SELECT candidates.*, parties.name
+                AS party_name
+                FROM candidates
+                LEFT JOIN parties
+                ON candidates.party_9d = parties.id
+                WHERE candidates.id = ?`;
     //will only call query from table with matching id
     const params = [req.params.id];
 
